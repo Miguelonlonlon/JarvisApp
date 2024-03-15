@@ -336,11 +336,11 @@
 <body class="" style="visibility: hidden;">
 
 <section id="top_sect" class="second">
-    <button id="main_btn" onclick="DemoApp.sendMessage('');">Send «Hello, World!»</button>
-    <button id="with_webview_btn" onclick="DemoApp.sendMessage('', true);">Send «Hello, World!» with inline webview button</button>
-    <button id="data_btn" onclick="DemoApp.sendTime(true);">Send current time to bot (x10)</button>
-    <button onclick="DemoApp.expand();">Expand Webview</button>
-    <button onclick="DemoApp.toggleMainButton(this);">Hide Main Button</button>
+    <button id="main_btn" onclick="JarvisApp.sendMessage('');">Send «Hello, World!»</button>
+    <button id="with_webview_btn" onclick="JarvisApp.sendMessage('', true);">Send «Hello, World!» with inline webview button</button>
+    <button id="data_btn" onclick="JarvisApp.sendTime(true);">Send current time to bot (x10)</button>
+    <button onclick="JarvisApp.expand();">Expand Webview</button>
+    <button onclick="JarvisApp.toggleMainButton(this);">Hide Main Button</button>
     <input type="text" placeholder="Input text in regular input..." id="regular_field"/>
     <div
             class="input"
@@ -378,11 +378,11 @@
     </ul>
     <p>Test permissions:</p>
     <ul>
-        <li><a href="javascript:;" onclick="return DemoApp.requestLocation(this);">Request Location</a> <span></span></li>
-        <li><a href="javascript:;" onclick="return DemoApp.requestVideo(this);">Request Video</a> <span></span></li>
-        <li><a href="javascript:;" onclick="return DemoApp.requestAudio(this);">Request Audio</a> <span></span></li>
-        <li><a href="javascript:;" onclick="return DemoApp.requestAudioVideo(this);">Request Audio+Video</a> <span></span></li>
-        <li><a href="javascript:;" onclick="return DemoApp.testClipboard(this);" id="clipboard_test">Read from clipboard</a> <span></span></li>
+        <li><a href="javascript:;" onclick="return JarvisApp.requestLocation(this);">Request Location</a> <span></span></li>
+        <li><a href="javascript:;" onclick="return JarvisApp.requestVideo(this);">Request Video</a> <span></span></li>
+        <li><a href="javascript:;" onclick="return JarvisApp.requestAudio(this);">Request Audio</a> <span></span></li>
+        <li><a href="javascript:;" onclick="return JarvisApp.requestAudioVideo(this);">Request Audio+Video</a> <span></span></li>
+        <li><a href="javascript:;" onclick="return JarvisApp.testClipboard(this);" id="clipboard_test">Read from clipboard</a> <span></span></li>
     </ul>
     <p>Test alerts:</p>
     <div class="columns">
@@ -392,13 +392,13 @@
             <li><a href="javascript:;" onclick="prompt('How old are you?');">prompt</a></li>
         </ul>
         <ul>
-            <li><a href="javascript:;" onclick="DemoApp.showAlert('Hello!');">showAlert</a></li>
-            <li><a href="javascript:;" onclick="DemoApp.showConfirm('Are you sure?');">showConfirm</a></li>
-            <li><a href="javascript:;" onclick="DemoApp.requestWriteAccess();">requestWriteAccess</a></li>
-            <li><a href="javascript:;" onclick="DemoApp.requestContact();">requestContact</a></li>
-            <li><a href="javascript:;" onclick="DemoApp.showPopup();">showPopup</a></li>
-            <li><a href="javascript:;" onclick="DemoApp.showScanQrPopup();">showScanQrPopup</a></li>
-            <li><a href="javascript:;" onclick="DemoApp.showScanQrPopup(true);">showScanQrPopup (links only)</a></li>
+            <li><a href="javascript:;" onclick="JarvisApp.showAlert('Hello!');">showAlert</a></li>
+            <li><a href="javascript:;" onclick="JarvisApp.showConfirm('Are you sure?');">showConfirm</a></li>
+            <li><a href="javascript:;" onclick="JarvisApp.requestWriteAccess();">requestWriteAccess</a></li>
+            <li><a href="javascript:;" onclick="JarvisApp.requestContact();">requestContact</a></li>
+            <li><a href="javascript:;" onclick="JarvisApp.showPopup();">showPopup</a></li>
+            <li><a href="javascript:;" onclick="JarvisApp.showScanQrPopup();">showScanQrPopup</a></li>
+            <li><a href="javascript:;" onclick="JarvisApp.showScanQrPopup(true);">showScanQrPopup (links only)</a></li>
         </ul>
     </div>
     <p>Haptics:</p>
@@ -432,7 +432,7 @@
      * Note: all requests to backend are disabled in this demo, you should use your own backend
      */
 
-    const DemoApp = {
+    const JarvisApp = {
         initData      : Telegram.WebApp.initData || '',
         initDataUnsafe: Telegram.WebApp.initDataUnsafe || {},
         MainButton    : Telegram.WebApp.MainButton,
@@ -443,7 +443,7 @@
             Telegram.WebApp.MainButton.setParams({
                 text      : 'CLOSE WEBVIEW',
                 is_visible: true
-            }).onClick(DemoApp.close);
+            }).onClick(JarvisApp.close);
         },
         expand() {
             Telegram.WebApp.expand();
@@ -464,7 +464,7 @@
 
         // actions
         sendMessage(msg_id, with_webview) {
-            if (!DemoApp.initDataUnsafe.query_id) {
+            if (!JarvisApp.initDataUnsafe.query_id) {
                 alert('WebViewQueryId not defined');
                 return;
             }
@@ -474,9 +474,9 @@
             const btn       = document.querySelector('#btn_status');
             btn.textContent = 'Sending...';
 
-            DemoApp.apiRequest('sendMessage', {
+            JarvisApp.apiRequest('sendMessage', {
                 msg_id      : msg_id || '',
-                with_webview: !DemoApp.initDataUnsafe.receiver && with_webview ? 1 : 0
+                with_webview: !JarvisApp.initDataUnsafe.receiver && with_webview ? 1 : 0
             }, function (result) {
                 document.querySelectorAll('button').forEach((btn) => btn.disabled = false);
 
@@ -509,7 +509,7 @@
             const btnStatus       = document.querySelector('#btn_status');
             btnStatus.textContent = 'Changing button...';
 
-            DemoApp.apiRequest('changeMenuButton', {}, function (result) {
+            JarvisApp.apiRequest('changeMenuButton', {}, function (result) {
                 document.querySelectorAll('button').forEach((btn) => btn.disabled = false);
 
                 if (result.response) {
@@ -544,12 +544,12 @@
         },
         checkInitData() {
             const webViewStatus = document.querySelector('#webview_data_status');
-            if (DemoApp.initDataUnsafe.query_id &&
-                DemoApp.initData &&
+            if (JarvisApp.initDataUnsafe.query_id &&
+                JarvisApp.initData &&
                 webViewStatus.classList.contains('status_need')
             ) {
                 webViewStatus.classList.remove('status_need');
-                DemoApp.apiRequest('checkInitData', {}, function (result) {
+                JarvisApp.apiRequest('checkInitData', {}, function (result) {
                     if (result.ok) {
                         webViewStatus.textContent = 'Hash is correct (async)';
                         webViewStatus.className   = 'ok';
@@ -592,18 +592,18 @@
         requestWriteAccess() {
             Telegram.WebApp.requestWriteAccess(function (result) {
                 if (result) {
-                    DemoApp.showAlert('Write access granted');
+                    JarvisApp.showAlert('Write access granted');
                 } else {
-                    DemoApp.showAlert('Write access denied');
+                    JarvisApp.showAlert('Write access denied');
                 }
             });
         },
         requestContact() {
             Telegram.WebApp.requestContact(function (result) {
                 if (result) {
-                    DemoApp.showAlert('Contact granted');
+                    JarvisApp.showAlert('Contact granted');
                 } else {
-                    DemoApp.showAlert('Contact denied');
+                    JarvisApp.showAlert('Contact denied');
                 }
             });
         },
@@ -618,7 +618,7 @@
                 ]
             }, function (buttonId) {
                 if (buttonId === 'delete') {
-                    DemoApp.showAlert("'Delete all' selected");
+                    JarvisApp.showAlert("'Delete all' selected");
                 } else if (buttonId === 'faq') {
                     Telegram.WebApp.openLink('https://telegram.org/faq');
                 }
@@ -640,7 +640,7 @@
                         return true;
                     }
                 } else {
-                    DemoApp.showAlert(text);
+                    JarvisApp.showAlert(text);
 
                     return true;
                 }
@@ -715,7 +715,7 @@
             // CHANGE THIS CODE TO YOUR OWN
             return onCallback && onCallback({error: 'This function (' + method + ') should send requests to your backend. Please, change this code to your own.'});
 
-            const authData = DemoApp.initData || '';
+            const authData = JarvisApp.initData || '';
             fetch('/demo/api', {
                 method     : 'POST',
                 body       : JSON.stringify(Object.assign(data, {
@@ -736,31 +736,31 @@
         }
     }
 
-    const DemoAppMenu = {
+    const JarvisAppMenu = {
         init() {
-            DemoApp.init();
+            JarvisApp.init();
             document.body.classList.add('gray');
             Telegram.WebApp.setHeaderColor('secondary_bg_color');
         }
     };
 
-    const DemoAppInitData = {
+    const JarvisAppInitData = {
         init() {
-            DemoApp.init();
+            JarvisApp.init();
             Telegram.WebApp.onEvent('themeChanged', function () {
                 document.getElementById('theme_data').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
             });
-            document.getElementById('webview_data').innerHTML = JSON.stringify(DemoApp.initDataUnsafe, null, 2);
+            document.getElementById('webview_data').innerHTML = JSON.stringify(JarvisApp.initDataUnsafe, null, 2);
             document.getElementById('theme_data').innerHTML   = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
-            DemoApp.checkInitData();
+            JarvisApp.checkInitData();
         }
     };
 
-    const DemoAppViewport = {
+    const JarvisAppViewport = {
         init() {
-            DemoApp.init();
-            Telegram.WebApp.onEvent('viewportChanged', DemoAppViewport.setData);
-            DemoAppViewport.setData();
+            JarvisApp.init();
+            Telegram.WebApp.onEvent('viewportChanged', JarvisAppViewport.setData);
+            JarvisAppViewport.setData();
         },
         setData() {
             document.querySelector('.viewport-border').setAttribute('text', window.innerWidth + ' x ' + round(Telegram.WebApp.viewportHeight, 2))
@@ -808,11 +808,11 @@
         document.getElementById('theme_data').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
     });
 
-    if (DemoApp.initDataUnsafe.query_id) {
+    if (JarvisApp.initDataUnsafe.query_id) {
         document.getElementById('main_btn').style.display = 'block';
     }
-    document.getElementById('with_webview_btn').style.display = !!DemoApp.initDataUnsafe.query_id && !DemoApp.initDataUnsafe.receiver ? 'block' : 'none';
-    document.getElementById('webview_data').innerHTML         = JSON.stringify(DemoApp.initDataUnsafe, null, 2);
+    document.getElementById('with_webview_btn').style.display = !!JarvisApp.initDataUnsafe.query_id && !JarvisApp.initDataUnsafe.receiver ? 'block' : 'none';
+    document.getElementById('webview_data').innerHTML         = JSON.stringify(JarvisApp.initDataUnsafe, null, 2);
 
     document.getElementById('theme_data').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
     document.getElementById('regular_link').setAttribute('href', document.getElementById('regular_link').getAttribute('href') + location.hash);
@@ -829,26 +829,26 @@
     document.getElementById('ver').innerHTML      = Telegram.WebApp.version;
     document.getElementById('platform').innerHTML = Telegram.WebApp.platform;
 
-    if (DemoApp.initDataUnsafe.receiver) {
+    if (JarvisApp.initDataUnsafe.receiver) {
         document.getElementById('peer_wrap').style.display = 'block';
-        document.getElementById('peer_name').innerHTML     = DemoApp.initDataUnsafe.receiver.first_name + ' ' + DemoApp.initDataUnsafe.receiver.last_name;
-        if (DemoApp.initDataUnsafe.receiver.photo_url) {
-            document.getElementById('peer_photo').setAttribute('src', DemoApp.initDataUnsafe.receiver.photo_url);
+        document.getElementById('peer_name').innerHTML     = JarvisApp.initDataUnsafe.receiver.first_name + ' ' + JarvisApp.initDataUnsafe.receiver.last_name;
+        if (JarvisApp.initDataUnsafe.receiver.photo_url) {
+            document.getElementById('peer_photo').setAttribute('src', JarvisApp.initDataUnsafe.receiver.photo_url);
         } else {
             document.getElementById('peer_photo').style.display = 'none';
         }
-    } else if (DemoApp.initDataUnsafe.chat) {
+    } else if (JarvisApp.initDataUnsafe.chat) {
         document.getElementById('peer_wrap').style.display = 'block';
-        document.getElementById('peer_name').innerHTML     = DemoApp.initDataUnsafe.chat.title;
-        if (DemoApp.initDataUnsafe.chat.photo_url) {
-            document.getElementById('peer_photo').setAttribute('src', DemoApp.initDataUnsafe.chat.photo_url);
+        document.getElementById('peer_name').innerHTML     = JarvisApp.initDataUnsafe.chat.title;
+        if (JarvisApp.initDataUnsafe.chat.photo_url) {
+            document.getElementById('peer_photo').setAttribute('src', JarvisApp.initDataUnsafe.chat.photo_url);
         } else {
             document.getElementById('peer_photo').style.display = 'none';
         }
     }
 
-    DemoApp.checkInitData();
-    DemoApp.init();
+    JarvisApp.checkInitData();
+    JarvisApp.init();
 
     function setViewportData() {
         document.querySelector('.viewport-border').setAttribute('text', window.innerWidth + ' x ' + round(Telegram.WebApp.viewportHeight, 2))
@@ -903,7 +903,7 @@
         document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
     });
 
-    DemoApp.testClipboard(document.getElementById('clipboard_test'));
+    JarvisApp.testClipboard(document.getElementById('clipboard_test'));
 </script>
 
 </body>
